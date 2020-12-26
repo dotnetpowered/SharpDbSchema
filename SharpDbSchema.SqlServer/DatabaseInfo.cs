@@ -122,8 +122,8 @@ namespace SharpDbSchema.SqlServer
 
 		private ITableMetadata[] GetTables()
 		{
-			SqlDataReader reader=Execute(GetObjectSQL("U",false));
-			ArrayList tables=new ArrayList();
+			using SqlDataReader reader=Execute(GetObjectSQL("U",false));
+			List<TableInfo> tables=new ();
 			while (reader.Read())
 			{
 				TableInfo tbl=new TableInfo(this, 
@@ -135,13 +135,13 @@ namespace SharpDbSchema.SqlServer
 
 				tables.Add(tbl);
 			}
-			return (ITableMetadata[]) tables.ToArray(typeof(ITableMetadata));
+			return tables.ToArray();
 		}
 
 		private IViewMetadata[] GetViews()
 		{
-			SqlDataReader reader=Execute(GetObjectSQL("V",true));
-			ArrayList views=new ArrayList();
+			using SqlDataReader reader=Execute(GetObjectSQL("V",true));
+			List<ViewInfo> views=new ();
 			while (reader.Read())
 			{
 				ViewInfo view=new ViewInfo(this, 
@@ -154,13 +154,13 @@ namespace SharpDbSchema.SqlServer
 
 				views.Add(view);
 			}
-			return (IViewMetadata[]) views.ToArray(typeof(IViewMetadata));
+			return views.ToArray();
 		}
 
 		private IStoredProcMetadata[] GetStoredProcs()
 		{
-			SqlDataReader reader=Execute(GetObjectSQL("P",true));
-			ArrayList proclist=new ArrayList();
+			using SqlDataReader reader=Execute(GetObjectSQL("P",true));
+			List<StoredProcInfo> proclist=new ();
 			while (reader.Read())
 			{
 				StoredProcInfo proc=new StoredProcInfo(this, 
@@ -173,7 +173,7 @@ namespace SharpDbSchema.SqlServer
 
 				proclist.Add(proc);
 			}
-			return (IStoredProcMetadata[]) proclist.ToArray(typeof(IStoredProcMetadata));
+			return proclist.ToArray();
 		}
 
 		internal IColumnMetadata[] LoadColumns(int ObjectId)
@@ -206,8 +206,8 @@ namespace SharpDbSchema.SqlServer
 			sb.Append("where so.xtype in ('U','V','P','FN') and so.Id="+ObjectId.ToString());
 			sb.Append("order by sa.Id, sa.ColOrder ");
 
-			SqlDataReader reader=Execute(sb);
-			ArrayList columns=new ArrayList();
+			using SqlDataReader reader=Execute(sb);
+			List<ColumnInfo> columns=new ();
 			while (reader.Read())
 			{
 				bool IsKey= ( (Int16) reader["PK"] )!=0;
@@ -224,7 +224,7 @@ namespace SharpDbSchema.SqlServer
 
 				columns.Add(col);
 			}
-			return (IColumnMetadata[]) columns.ToArray(typeof(IColumnMetadata));
+			return columns.ToArray();
 		}
 
         private static DbType ConvertToDbType(string TypeName)

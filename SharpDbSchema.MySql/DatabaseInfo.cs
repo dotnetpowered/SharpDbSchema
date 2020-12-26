@@ -1,16 +1,15 @@
 using System;
-using System.Collections;
 using System.Text;
-using System.Xml;
-using SharpDbSchema;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.Data;
 
 namespace SharpDbSchema.MySql
 {
-	/// <summary>
-	/// Implements IDatabaseInfo for MySql
-	/// </summary>
-	public class DatabaseInfo : IDatabaseMetadata
+    /// <summary>
+    /// Implements IDatabaseInfo for MySql
+    /// </summary>
+    public class DatabaseInfo : IDatabaseMetadata
 	{
 		private string _Name;
 		private ITableMetadata[] _Tables;
@@ -30,47 +29,47 @@ namespace SharpDbSchema.MySql
 			}
 		}		
 
-		internal System.Data.IDataReader Execute(StringBuilder sb)
+		internal IDataReader Execute(StringBuilder sb)
 		{
 			return Execute(sb.ToString());
 		}
 
-		internal System.Data.IDataReader Execute(string s)
+		internal IDataReader Execute(string s)
 		{
-			MySqlConnection conn=new MySqlConnection(_Connection);
+			MySqlConnection conn=new(_Connection);
 			conn.Open();
-			System.Data.IDbCommand cmd=conn.CreateCommand();
+			IDbCommand cmd=conn.CreateCommand();
 			cmd.CommandText=s;
-			return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-		}
+            return cmd.ExecuteReader(CommandBehavior.CloseConnection);
+        }
 
-		private ITableMetadata[] GetTables()
+        private ITableMetadata[] GetTables()
 		{
-			System.Data.IDataReader reader=Execute("SHOW TABLES IN "+_Name);
-			ArrayList tables=new ArrayList();
+			using IDataReader reader=Execute("SHOW TABLES IN "+_Name);
+			List<TableInfo> tables=new ();
 			while (reader.Read())
 			{
-				TableInfo tbl=new TableInfo(this, 
+				TableInfo tbl=new(this, 
 					(string) reader[0], 
 					null,
 					DateTime.MinValue);
 
 				tables.Add(tbl);
 			}
-			return (ITableMetadata[]) tables.ToArray(typeof(ITableMetadata));
-		}
+            return tables.ToArray();
+        }
 
 		internal IColumnMetadata[] LoadColumns(string TableName)
 		{
-			System.Data.IDataReader reader=Execute("SHOW COLUMNS IN "+_Name+"."+TableName);
-			ArrayList columns=new ArrayList();
+			using IDataReader reader=Execute("SHOW COLUMNS IN "+_Name+"."+TableName);
+			List<ColumnInfo> columns=new ();
 			while (reader.Read())
 			{
 				bool IsKey= ( (string) reader["Key"] )=="PRI";
 				string TypeName=(string) reader["Type"];
 
 				// TODO: read other column attributes
-				ColumnInfo col = new ColumnInfo()
+				ColumnInfo col = new()
 				{
 					Name = (string)reader["Field"],
 					IsKey = IsKey
@@ -78,7 +77,7 @@ namespace SharpDbSchema.MySql
 
 				columns.Add(col);
 			}
-			return (IColumnMetadata[]) columns.ToArray(typeof(IColumnMetadata));
+			return columns.ToArray();
 		}
 
 
@@ -86,7 +85,7 @@ namespace SharpDbSchema.MySql
 		{
 			get
 			{
-				return null;
+				throw new NotImplementedException();
 			}
 		}
 
@@ -104,7 +103,7 @@ namespace SharpDbSchema.MySql
 		{
 			get
 			{
-				return null;
+				throw new NotImplementedException();
 			}
 		}
 
