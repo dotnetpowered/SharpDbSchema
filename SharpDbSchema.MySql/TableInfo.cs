@@ -1,7 +1,4 @@
 using System;
-using System.Text;
-using System.Collections;
-using SharpDbSchema;
 
 namespace SharpDbSchema.MySql
 {
@@ -12,16 +9,15 @@ namespace SharpDbSchema.MySql
 	{
 		private string _Name;
 		private string _Description;
-		private DateTime _Created;
+		private DateTime? _Created;
 		private DatabaseInfo _db;
 		private IColumnMetadata[] _Columns;
 
-		internal TableInfo(DatabaseInfo db, string Name, string Description, DateTime Created)
+		internal TableInfo(DatabaseInfo db, string Name, string Description)
 		{
 			_db=db;
 			_Name=Name;
 			_Description=Description;
-			_Created=Created;
 		}
 
 		public string Name
@@ -40,7 +36,7 @@ namespace SharpDbSchema.MySql
 			}
 		}
 
-		public DateTime Created
+		public DateTime? Created
 		{
 			get
 			{

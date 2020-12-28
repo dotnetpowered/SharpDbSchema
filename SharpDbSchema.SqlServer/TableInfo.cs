@@ -13,7 +13,7 @@ namespace SharpDbSchema.SqlServer
 		private int _ID;
 		private string _Name;
 		private string _Description;
-		private DateTime _Created;
+		private DateTime? _Created;
 		private DatabaseInfo _db;
 		private IColumnMetadata[] _Columns;
 
@@ -42,7 +42,7 @@ namespace SharpDbSchema.SqlServer
 			}
 		}
 
-		public DateTime Created
+		public DateTime? Created
 		{
 			get
 			{

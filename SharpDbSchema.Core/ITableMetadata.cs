@@ -15,7 +15,7 @@ namespace SharpDbSchema
 		{
 			get;
 		}
-		DateTime Created
+		DateTime? Created
 		{
 			get;
 		}

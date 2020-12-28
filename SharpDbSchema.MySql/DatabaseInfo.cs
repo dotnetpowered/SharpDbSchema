@@ -51,8 +51,7 @@ namespace SharpDbSchema.MySql
 			{
 				TableInfo tbl=new(this, 
 					(string) reader[0], 
-					null,
-					DateTime.MinValue);
+					null);
 
 				tables.Add(tbl);
 			}
