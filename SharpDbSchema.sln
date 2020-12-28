@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDbSchema.Core", "Sharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDbSchema.SqlServer", "SharpDbSchema.SqlServer\SharpDbSchema.SqlServer.csproj", "{BDE85CC1-34DA-4C25-B4E8-C3804EACAD51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDbSchema.PostgreSQL", "SharpDbSchema.PostgreSQL\SharpDbSchema.PostgreSQL.csproj", "{51917549-6376-4B45-BE6D-D05D0C85B98C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BDE85CC1-34DA-4C25-B4E8-C3804EACAD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDE85CC1-34DA-4C25-B4E8-C3804EACAD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDE85CC1-34DA-4C25-B4E8-C3804EACAD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51917549-6376-4B45-BE6D-D05D0C85B98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51917549-6376-4B45-BE6D-D05D0C85B98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51917549-6376-4B45-BE6D-D05D0C85B98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51917549-6376-4B45-BE6D-D05D0C85B98C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
